@@ -1,0 +1,26 @@
+# ── Web Framework ──────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9        # Required for file uploads
+
+# ── Image Processing ────────────────────────────────────────
+opencv-python-headless==4.9.0.80   # OpenCV (headless = no GUI, suits servers)
+easyocr==1.7.1                     # Primary OCR engine
+Pillow==10.3.0                     # Image format handling
+
+# ── HTTP Requests ───────────────────────────────────────────
+httpx==0.27.0                      # Async HTTP client
+
+# ── Database & Storage ──────────────────────────────────────
+supabase==2.4.6                    # Supabase Python client
+
+# ── Caching ─────────────────────────────────────────────────
+redis==5.0.4                       # Redis client (Upstash uses standard Redis protocol)
+
+# ── Data Validation ─────────────────────────────────────────
+pydantic==2.7.1                    # Request/response schema validation
+pydantic-settings==2.2.1           # For loading .env variables into config
+
+# ── Utilities ───────────────────────────────────────────────
+python-dotenv==1.0.1               # Load .env file locally
+numpy==1.26.4                      # Required by OpenCV & EasyOCR
