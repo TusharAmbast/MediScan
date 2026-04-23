@@ -1,0 +1,388 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   MEDISCAN — DESIGN SYSTEM  (Tailwind v4 + @theme)
+   Aesthetic: Premium Minimalist  ·  Linear.app / Apple Health
+   Palette: Deep Slate · Electric Cyan · Negative Space
+   ═══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Fonts ──────────────────────────────────────────── */
+  --font-sans:    var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-mono:    var(--font-jetbrains), "JetBrains Mono", "Fira Code", monospace;
+
+  /* ── Brand accent ───────────────────────────────────── */
+  --color-brand-50:  #ecfeff;
+  --color-brand-100: #cffafe;
+  --color-brand-200: #a5f3fc;
+  --color-brand-300: #67e8f9;
+  --color-brand-400: #22d3ee;
+  --color-brand-500: #06b6d4;
+  --color-brand-600: #0891b2;
+  --color-brand-700: #0e7490;
+  --color-brand-800: #155e75;
+  --color-brand-900: #164e63;
+
+  /* ── Animations ─────────────────────────────────────── */
+  --animate-fade-up:      fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  --animate-fade-in:      fadeIn 0.8s ease both;
+  --animate-float:        floatY 6s ease-in-out infinite;
+  --animate-scanline:     scanline 3s ease-in-out infinite;
+  --animate-pulse-ring:   pulseRing 2s ease-out infinite;
+  --animate-shimmer:      shimmer 2.5s linear infinite;
+  --animate-mesh:         meshMove 20s ease infinite;
+  --animate-glow-pulse:   glowPulse 3s ease-in-out infinite;
+  --animate-border-spin:  borderSpin 4s linear infinite;
+}
+
+/* ── Base ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #020617;
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  line-height: 1.65;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ── Selection ─────────────────────────────────────────── */
+::selection {
+  background: rgba(6, 182, 212, 0.3);
+  color: #f0fdfa;
+}
+
+/* ── Scrollbar (dark) ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
+
+/* ── Focus ring ───────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ── Autofill ─────────────────────────────────────────── */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #0f172a inset;
+  -webkit-text-fill-color: #e2e8f0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   GLASSMORPHISM SYSTEM
+   ═══════════════════════════════════════════════════════════ */
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 20px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  border-color: rgba(6, 182, 212, 0.15);
+  box-shadow:
+    0 0 0 1px rgba(6, 182, 212, 0.05) inset,
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 60px -20px rgba(6, 182, 212, 0.1);
+  transform: translateY(-2px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SHIMMER HOVER EFFECT
+   ═══════════════════════════════════════════════════════════ */
+
+.shimmer-hover {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(6, 182, 212, 0.03) 30%,
+    rgba(6, 182, 212, 0.10) 50%,
+    rgba(6, 182, 212, 0.03) 70%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.shimmer-hover:hover::after {
+  transform: translateX(100%);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   GRADIENT TEXT
+   ═══════════════════════════════════════════════════════════ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 40%, #67e8f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #f97316 0%, #f59e0b 50%, #eab308 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   MESH GRADIENT BACKGROUND
+   ═══════════════════════════════════════════════════════════ */
+
+.mesh-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(14, 116, 144, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 80%, rgba(8, 145, 178, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 70% 60%, rgba(34, 211, 238, 0.06) 0%, transparent 70%);
+  background-size: 200% 200%, 180% 180%, 160% 160%, 200% 200%;
+  animation: meshMove 20s ease infinite;
+}
+
+.mesh-gradient-subtle {
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(6, 182, 212, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 70% 80%, rgba(14, 116, 144, 0.05) 0%, transparent 70%);
+  background-size: 200% 200%, 180% 180%;
+  animation: meshMove 25s ease infinite;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DOT GRID
+   ═══════════════════════════════════════════════════════════ */
+
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED BORDER (Scan Page)
+   ═══════════════════════════════════════════════════════════ */
+
+.animated-border {
+  position: relative;
+  border-radius: 1.5rem;
+}
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #06b6d4 10%,
+    transparent 20%,
+    transparent 80%,
+    #06b6d4 90%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderSpin 4s linear infinite;
+  opacity: 0.6;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   GLOW EFFECTS
+   ═══════════════════════════════════════════════════════════ */
+
+.glow-cyan {
+  box-shadow:
+    0 0 20px rgba(6, 182, 212, 0.15),
+    0 0 60px rgba(6, 182, 212, 0.05);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 60px rgba(6, 182, 212, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR (used by Navbar)
+   ═══════════════════════════════════════════════════════════ */
+
+.scroll-progress {
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, #22d3ee);
+  transform-origin: left;
+  transition: transform 0.1s linear;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LANGUAGE CHIP — Tactile Design
+   ═══════════════════════════════════════════════════════════ */
+
+.lang-chip {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.3),
+    0 4px 12px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.lang-chip:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.3),
+    0 8px 24px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.lang-chip:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.3),
+    inset 0 1px 3px rgba(0,0,0,0.2);
+  transition-duration: 0.1s;
+}
+.lang-chip.selected {
+  box-shadow:
+    0 0 0 2px rgba(6, 182, 212, 0.4),
+    0 4px 12px rgba(6, 182, 212, 0.15),
+    inset 0 1px 0 rgba(6, 182, 212, 0.1);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+@keyframes scanline {
+  0%   { top: 5%;  opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 90%; opacity: 0; }
+}
+
+@keyframes pulseRing {
+  0%   { transform: scale(1);    opacity: 0.4; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes meshMove {
+  0%   { background-position: 0% 50%, 100% 0%, 50% 100%, 0% 0%; }
+  25%  { background-position: 50% 0%, 0% 100%, 100% 50%, 100% 100%; }
+  50%  { background-position: 100% 50%, 50% 50%, 0% 0%, 50% 50%; }
+  75%  { background-position: 50% 100%, 100% 0%, 50% 50%, 0% 100%; }
+  100% { background-position: 0% 50%, 100% 0%, 50% 100%, 0% 0%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+@keyframes borderSpin {
+  to { --angle: 360deg; }
+  /* fallback for conic-gradient rotation */
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED BORDER — Proper rotating gradient
+   ═══════════════════════════════════════════════════════════ */
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.rotating-border {
+  --border-angle: 0deg;
+  border: 2px solid transparent;
+  border-image: conic-gradient(from var(--border-angle), transparent 40%, #06b6d4, transparent 60%) 1;
+  animation: rotateBorder 4s linear infinite;
+}
+
+@keyframes rotateBorder {
+  to { --border-angle: 360deg; }
+}

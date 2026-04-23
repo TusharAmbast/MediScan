@@ -1,0 +1,106 @@
+{
+  "nav": {
+    "home": "Home",
+    "scan": "Scan Medicine",
+    "search": "Search",
+    "about": "About"
+  },
+  "home": {
+    "hero_title": "Identify Any Medicine",
+    "hero_subtitle": "Instantly",
+    "hero_description": "Upload a photo of your medicine or describe your symptoms to get dosage info, warnings, side effects, and alternatives — free, no login required.",
+    "cta_scan": "Scan a Medicine",
+    "cta_search": "Search by Symptom",
+    "features_title": "Everything you need to know",
+    "feature_scan_title": "Photo Recognition",
+    "feature_scan_desc": "Snap a photo of any medicine strip, box, or tablet. Our OCR pipeline extracts the name instantly.",
+    "feature_symptom_title": "Symptom Search",
+    "feature_symptom_desc": "Describe what you're feeling and get a list of medicines commonly used to treat those symptoms.",
+    "feature_multilingual_title": "Multilingual",
+    "feature_multilingual_desc": "Get results in Hindi, Tamil, Bengali, Telugu, Marathi, Gujarati, Kannada, or English.",
+    "feature_free_title": "Free & Private",
+    "feature_free_desc": "No account needed. No data sold. All searches are anonymous."
+  },
+  "scan": {
+    "title": "Scan Medicine",
+    "subtitle": "Take or upload a clear photo of your medicine packaging, strip, or tablet to identify it instantly.",
+    "upload_prompt": "Upload medicine photo",
+    "upload_hint": "Drag & drop, or browse files",
+    "upload_formats": "JPG, PNG, WebP, HEIC · Max 10MB",
+    "camera_hint": "On mobile, you can use your camera directly",
+    "drop_active": "Drop your image here",
+    "scan_button": "Scan Medicine",
+    "scanning": "Scanning medicine…",
+    "language_label": "Response Language",
+    "tips_title": "Tips for best results",
+    "tips": [
+      "Photograph the medicine name clearly — strip, box, or blister pack",
+      "Ensure good lighting and avoid blurry or angled shots",
+      "Indian brand names (Crocin, Dolo) may not always be found — try the generic name",
+      "Works best with printed text; handwritten labels may not be recognized"
+    ],
+    "search_link": "Know the medicine name? Search by name or symptom →"
+  },
+  "search": {
+    "title": "Search Medicines",
+    "subtitle": "Describe your symptoms or search by medicine name to get dosage info, side effects, and more.",
+    "tab_symptom": "By Symptom",
+    "tab_name": "By Name",
+    "language_label": "Response Language",
+    "symptom_placeholder": "Type a symptom (e.g. fever, headache)…",
+    "symptom_add_more": "Add more symptoms…",
+    "symptom_common": "Common symptoms",
+    "symptom_hint": "Press Enter or , to add · Backspace to remove",
+    "symptom_button": "Search for {count} symptom",
+    "symptom_button_plural": "Search for {count} symptoms",
+    "symptom_button_empty": "Add symptoms to search",
+    "name_label": "Medicine or ingredient name",
+    "name_placeholder": "e.g. Ibuprofen, Cetirizine, Paracetamol…",
+    "name_tip": "Tip: Indian brand names (Crocin, Dolo) may not be found. Use generic names for better results.",
+    "name_try": "Try searching for",
+    "name_button": "Look Up Medicine",
+    "name_searching": "Looking up medicine…",
+    "searching": "Searching medicines…",
+    "scan_link": "Have the medicine in hand? Scan it instead →"
+  },
+  "result": {
+    "scan_title": "Scan Result",
+    "symptom_title": "Symptom Search",
+    "name_title": "Results for \"{query}\"",
+    "found_one": "Medicine identified successfully",
+    "found_many": "Found {count} medicines",
+    "extracted_label": "Text extracted from image",
+    "symptoms_label": "Symptoms searched",
+    "back_scan": "Scan again",
+    "back_search": "Search again",
+    "empty_scan": "We couldn't identify a medicine from the image. Try a clearer photo with the medicine name visible.",
+    "empty_symptom": "No medicines matched those symptoms. Try different or fewer symptoms.",
+    "empty_name": "This medicine wasn't found in our database. Try a generic name like 'Ibuprofen' instead.",
+    "empty_title": "No medicines found",
+    "error_title": "Something went wrong",
+    "try_again": "Try again"
+  },
+  "medicine_card": {
+    "generic": "Generic",
+    "brand_names": "Brand names",
+    "active_ingredients": "Active ingredients",
+    "dosage": "Dosage & Administration",
+    "warnings": "Warnings",
+    "side_effects": "Side Effects",
+    "interactions": "Drug Interactions",
+    "alternatives": "Alternatives",
+    "source": "View source data",
+    "pregnancy": "Pregnancy: Category {cat}",
+    "otc": "OTC",
+    "rx": "Rx"
+  },
+  "common": {
+    "loading": "Loading results…",
+    "disclaimer": "MediScan provides general information only. Always consult a qualified doctor or pharmacist before taking any medication. Do not self-medicate.",
+    "disclaimer_short": "Not medical advice. Consult a doctor before use."
+  },
+  "footer": {
+    "disclaimer": "MediScan is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the guidance of your doctor or qualified health provider.",
+    "copyright": "© {year} MediScan. Free to use. No data collected."
+  }
+}
