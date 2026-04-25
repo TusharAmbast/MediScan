@@ -16,8 +16,12 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
+# 1. Dummy variable to force Docker to bust the cache (Change this number if you ever need to clear cache again)
+ENV CACHE_BUSTER=1
+
 # PRE-INSTALL CPU-only PyTorch to stay under the 4GB limit
-RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+# Add "numpy<2.0.0" right in this command
+RUN pip install --no-cache-dir "numpy<2.0.0" torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 # Copy requirements and install
 COPY requirements.txt .

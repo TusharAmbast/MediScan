@@ -1,12 +1,14 @@
 numpy<2.0.0
+scipy==1.13.0
+opencv-python-headless<4.10.0.84
+easyocr
+
 # ── Web Framework ──────────────────────────────────────────
 fastapi==0.111.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9        # Required for file uploads
 
 # ── Image Processing ────────────────────────────────────────
-opencv-python-headless==4.9.0.80   # OpenCV (headless = no GUI, suits servers)
-easyocr==1.7.1                     # Primary OCR engine
 Pillow==10.3.0                     # Image format handling
 
 # ── HTTP Requests ───────────────────────────────────────────
@@ -24,4 +26,3 @@ pydantic-settings==2.2.1           # For loading .env variables into config
 
 # ── Utilities ───────────────────────────────────────────────
 python-dotenv==1.0.1               # Load .env file locally
-numpy==1.26.4                      # Required by OpenCV & EasyOCR
