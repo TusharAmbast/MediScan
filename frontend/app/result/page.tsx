@@ -23,59 +23,139 @@ interface MedicineInfo {
   drug_class?: string;
   purpose?: string;
   active_ingredients?: string[];
-  route?: string[];
+  route?: string | string[];
+  pregnancy_category?: string;
+  otc_or_rx?: string;
+  source?: string;
+}
+
+// Backend response shapes (may use different field names)
+interface BackendMedicineInfo {
+  brand_name?: string;
+  generic_name?: string;
+  manufacturer?: string;
+  dosage_form?: string;
+  route?: string;
+  purpose?: string[];
+  dosage?: string;
+  warnings?: string[];
+  inactive_ingredients?: string[];
+  alternatives?: string[];
+  // Frontend-style fields (in case data is already normalized)
+  name?: string;
+  brand_names?: string[];
+  side_effects?: string[];
+  drug_interactions?: string[];
+  drug_class?: string;
+  active_ingredients?: string[];
   pregnancy_category?: string;
   otc_or_rx?: string;
   source?: string;
 }
 
 interface ScanResponse {
+  success?: boolean;
   extracted_text?: string;
   medicine_name?: string;
-  medicine_info?: MedicineInfo;
-  medicines?: MedicineInfo[];
+  medicine_info?: BackendMedicineInfo;
+  medicines?: BackendMedicineInfo[];
   message?: string;
   confidence?: number;
+  ocr_confidence?: number;
+  ocr_method?: string;
   translated?: boolean;
   language?: string;
+  error?: string;
 }
 
 interface SearchResponse {
+  success?: boolean;
   symptoms?: string | string[];
-  medicines?: MedicineInfo[];
+  results?: BackendMedicineInfo[];
+  medicines?: BackendMedicineInfo[];
   message?: string;
   language?: string;
+  translated?: boolean;
+  error?: string;
 }
 
-type ResultData = ScanResponse | SearchResponse | MedicineInfo;
+type ResultData = ScanResponse | SearchResponse | BackendMedicineInfo;
+
+/**
+ * Normalize backend MedicineInfo fields to what MedicineCard expects.
+ * The backend uses brand_name (singular), purpose (array), etc.
+ * The frontend MedicineCard expects name, purpose (string), etc.
+ */
+function normalizeMedicine(raw: BackendMedicineInfo): MedicineInfo {
+  // If it already has 'name', it may already be normalized
+  const name = raw.name || raw.brand_name || raw.generic_name || "Unknown Medicine";
+  
+  // purpose: backend sends string[], frontend expects string
+  let purpose: string | undefined;
+  if (Array.isArray(raw.purpose) && raw.purpose.length > 0) {
+    purpose = raw.purpose.join("; ");
+  } else if (typeof raw.purpose === "string") {
+    purpose = raw.purpose;
+  }
+
+  // route: backend sends string, frontend can handle string | string[]
+  let route: string | string[] | undefined;
+  if (raw.route) {
+    route = raw.route;
+  }
+
+  return {
+    name,
+    generic_name: raw.generic_name,
+    brand_names: raw.brand_names || (raw.brand_name ? [raw.brand_name] : undefined),
+    dosage: raw.dosage,
+    warnings: raw.warnings,
+    side_effects: raw.side_effects,
+    drug_interactions: raw.drug_interactions,
+    alternatives: raw.alternatives,
+    manufacturer: raw.manufacturer,
+    drug_class: raw.drug_class || raw.dosage_form,
+    purpose,
+    active_ingredients: raw.active_ingredients || raw.inactive_ingredients,
+    route,
+    pregnancy_category: raw.pregnancy_category,
+    otc_or_rx: raw.otc_or_rx,
+    source: raw.source,
+  };
+}
 
 function extractMedicines(data: ResultData, mode: string): MedicineInfo[] {
   if (!data) return [];
 
-  // Single medicine from name lookup
+  // Single medicine from name lookup — check if it's a ScanResponse wrapper
   if (mode === "name") {
-    const d = data as MedicineInfo;
-    if (d.name) return [d];
+    const d = data as ScanResponse;
+    if (d.medicine_info) return [normalizeMedicine(d.medicine_info)];
+    // Might be a raw MedicineInfo
+    const raw = data as BackendMedicineInfo;
+    if (raw.brand_name || raw.generic_name || raw.name) return [normalizeMedicine(raw)];
   }
 
   // Scan response
   if (mode === "scan" || !mode) {
     const d = data as ScanResponse;
-    if (d.medicines && d.medicines.length > 0) return d.medicines;
-    if (d.medicine_info) return [d.medicine_info];
+    if (d.medicines && d.medicines.length > 0) return d.medicines.map(normalizeMedicine);
+    if (d.medicine_info) return [normalizeMedicine(d.medicine_info)];
   }
 
-  // Symptom search
+  // Symptom search — backend returns 'results', not 'medicines'
   if (mode === "symptom") {
     const d = data as SearchResponse;
-    if (d.medicines && d.medicines.length > 0) return d.medicines;
+    if (d.results && d.results.length > 0) return d.results.map(normalizeMedicine);
+    if (d.medicines && d.medicines.length > 0) return d.medicines.map(normalizeMedicine);
   }
 
-  // Fallback: try medicines array
+  // Fallback: try all possible fields
   const any = data as any;
-  if (any.medicines?.length > 0) return any.medicines;
-  if (any.medicine_info) return [any.medicine_info];
-  if (any.name) return [any as MedicineInfo];
+  if (any.results?.length > 0) return any.results.map(normalizeMedicine);
+  if (any.medicines?.length > 0) return any.medicines.map(normalizeMedicine);
+  if (any.medicine_info) return [normalizeMedicine(any.medicine_info)];
+  if (any.brand_name || any.generic_name || any.name) return [normalizeMedicine(any as BackendMedicineInfo)];
 
   return [];
 }
@@ -94,6 +174,11 @@ function getSymptoms(data: ResultData, mode: string): string | string[] | null {
     return d.symptoms || null;
   }
   return null;
+}
+
+function getError(data: ResultData): string | null {
+  const any = data as any;
+  return any.error || null;
 }
 
 export default function ResultPage() {
@@ -126,6 +211,15 @@ export default function ResultPage() {
         decoded = JSON.parse(decodeURIComponent(raw)) as ResultData;
       } else {
         setParseError("No result data found. Please try your search again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Check for backend error responses
+      const backendError = getError(decoded);
+      const any = decoded as any;
+      if (any.success === false && backendError) {
+        setParseError(backendError);
         setIsLoading(false);
         return;
       }

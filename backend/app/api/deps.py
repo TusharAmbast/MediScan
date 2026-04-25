@@ -10,7 +10,7 @@ from supabase import Client
 from typing import Optional
 from app.core.database import get_supabase_client
 
-SUPPORTED_LANGUAGES = {"en", "hi", "ta", "bn", "te", "mr"}
+SUPPORTED_LANGUAGES = {"en", "hi", "ta", "bn", "te", "mr", "gu", "kn"}
 
 
 async def get_language(accept_language: Optional[str] = Header(default="en")) -> str:

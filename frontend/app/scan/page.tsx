@@ -31,6 +31,7 @@ export default function ScanPage() {
       sessionStorage.setItem("mediscan_result", JSON.stringify(result));
       const params = new URLSearchParams();
       params.set("lang", language);
+      params.set("mode", "scan");
       router.push(`/result?${params.toString()}`);
     } catch (err: unknown) {
       const message =
