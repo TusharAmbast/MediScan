@@ -15,7 +15,7 @@ from app.models.response_models import MedicineInfo
 
 settings = get_settings()
 
-SUPPORTED_LANGUAGES = {"en", "hi", "ta", "bn", "te", "mr", "fr", "es", "ar"}
+SUPPORTED_LANGUAGES = {"en", "hi", "ta", "bn", "te", "mr", "gu", "kn", "fr", "es", "ar"}
 
 
 async def translate_text(text: str, target_language: str) -> str:
@@ -27,25 +27,25 @@ async def translate_text(text: str, target_language: str) -> str:
         return text
 
     try:
-        payload = {
-            "q": text,
-            "source": "en",
-            "target": target_language,
-            "format": "text"
-        }
-        if settings.LIBRETRANSLATE_API_KEY:
-            payload["api_key"] = settings.LIBRETRANSLATE_API_KEY
-
         async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.post(
-                f"{settings.LIBRETRANSLATE_URL}/translate",
-                json=payload
+            response = await client.get(
+                "https://translate.googleapis.com/translate_a/single",
+                params={
+                    "client": "gtx",
+                    "sl": "en",
+                    "tl": target_language,
+                    "dt": "t",
+                    "q": text
+                }
             )
 
         if response.status_code == 200:
-            return response.json().get("translatedText", text)
+            data = response.json()
+            # The API returns a nested list. The first item contains lists of translated segments.
+            translated_text = "".join([segment[0] for segment in data[0] if segment[0]])
+            return translated_text
 
-        logger.warning(f"LibreTranslate returned {response.status_code}")
+        logger.warning(f"Translation API returned {response.status_code}")
         return text
 
     except Exception as e:
