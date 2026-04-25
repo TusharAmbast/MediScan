@@ -9,7 +9,6 @@ Analyze Medicine Images instantly with the power of AI — fast, accurate, and b
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.io/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 [Live Demo](https://medi-scan-rt86.vercel.app/) · [Report Bug](https://github.com/TusharAmbast/MediScan/issues) · [Request Feature](https://github.com/TusharAmbast/MediScan/issues)
 
