@@ -1,6 +1,7 @@
 "use client";
 export const dynamic = 'force-dynamic';
 
+import { Suspense } from 'react';
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -182,7 +183,7 @@ function getError(data: ResultData): string | null {
   return any.error || null;
 }
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -408,5 +409,19 @@ export default function ResultPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense 
+      fallback={
+        <main className="min-h-screen bg-gray-950 pt-20 pb-16 flex items-center justify-center">
+          <Spinner size="lg" label="Loading results…" />
+        </main>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   );
 }
