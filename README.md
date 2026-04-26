@@ -208,8 +208,6 @@ MediScan is deployed across three free/low-cost platforms:
 | Backend | [Railway](https://railway.app) | Auto-deployed on push to `main` |
 | Database | [Supabase](https://supabase.com) | Managed PostgreSQL |
 
-For a full step-by-step deployment guide, see [DEPLOYMENT.md](./docs/DEPLOYMENT.md).
-
 ---
 
 ## 🤝 Contributing
@@ -231,12 +229,6 @@ git push origin feature/your-feature-name
 ```
 
 Please make sure your code follows the existing style and includes relevant comments.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ---
 
